@@ -27,7 +27,7 @@ public class UserRepository {
     }
 
     // Save users to JSON file
-    public void saveUsers() {
+    private void saveUsers() {
         try (Writer writer = new FileWriter(FILE_PATH)) {
             new Gson().toJson(users, writer);
         } catch (IOException e) {
@@ -35,13 +35,18 @@ public class UserRepository {
         }
     }
 
-    // Add a new user
     public void addUser(User user) {
         users.add(user);
-        saveUsers(); // Save the updated user list
+        saveUsers();
     }
 
     public User findUserByEmail(String email) {
         return users.stream().filter(user -> user.getEmail().equals(email)).findFirst().orElse(null);
+    }
+
+    public void updateUser(User user) {
+        users.removeIf(u -> u.getUserid().equals(user.getUserid()));
+        users.add(user);
+        saveUsers();
     }
 }

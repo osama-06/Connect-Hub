@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Backend;
 
 /**
@@ -14,15 +11,15 @@ public class User {
    private String username;
    private String password; //Hashed password
    private String dateOfBirth;
-   private String staues; //online or offline
+   private String status; //online or offline
 
-    public User(String userid, String email, String username, String password, String dateOfBirth, String staues) {
+    public User(String userid, String email, String username, String password, String dateOfBirth, String staus) {
         this.userid = userid;
         this.email = email;
         this.username = username;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
-        this.staues = staues;
+        this.status = status;
     }
 
     public String getUserid() {
@@ -65,12 +62,13 @@ public class User {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getStaues() {
-        return staues;
+    public String getStayus() {
+        return status;
     }
 
-    public void setStaues(String staues) {
-        this.staues = staues;
+
+    public void setStatus(String staues) {
+        this.status = staues;
     }
     
    
