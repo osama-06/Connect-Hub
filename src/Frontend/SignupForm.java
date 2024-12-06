@@ -14,13 +14,13 @@ import java.util.regex.Pattern;
 
 public class SignupForm extends JPanel {
     private final UserService userService;
-    private final CardLayout cardLayout;
-    private final JPanel cardPanel;
+    private final CardLayout cardLayout = null;
+    private final JPanel cardPanel = null;
 
-    public SignupForm(UserService userService, CardLayout cardLayout, JPanel cardPanel) {
+    public SignupForm(UserService userService  ) {
         this.userService = userService;
-        this.cardLayout = cardLayout;
-        this.cardPanel = cardPanel;
+        
+        
         setLayout(new GridLayout(6, 2, 10, 10));
 
         JLabel emailLabel = new JLabel("Email:");
