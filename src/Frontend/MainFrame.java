@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Frontend;
 
 import Backend.UserService;
@@ -29,9 +26,9 @@ public class MainFrame extends JFrame {
         // Create views
         JPanel mainMenuPanel = createMainMenuPanel();
         JPanel loginForm = new LoginForm(userService, this::onLoginSuccess);
-        JPanel signupForm = new SignupForm(userService);
+        JPanel signupForm = new SignupForm(userService, cardLayout, cardPanel);
 
-        // Add views to cardPanel
+// Add views to cardPanel
         cardPanel.add(mainMenuPanel, "MainMenu");
         cardPanel.add(loginForm, "Login");
         cardPanel.add(signupForm, "Signup");
