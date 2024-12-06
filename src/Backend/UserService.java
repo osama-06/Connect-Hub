@@ -1,5 +1,6 @@
 package Backend;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -7,6 +8,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final FriendRepository friendRepository;
+    
+    private User currentUser; // Field to hold the current logged-in user
 
     public UserService(UserRepository userRepository, PostRepository postRepository, FriendRepository friendRepository) {
         this.userRepository = userRepository;
@@ -29,38 +32,46 @@ public class UserService {
         if (user != null && HashUtils.verifyPassword(password, user.getPassword())) {
             user.setStatus("online");
             userRepository.updateUser(user);
+            this.currentUser = user; // Set current user upon login
             return user;
         }
         return null; // Invalid credentials
     }
 
-    public void logout(User user) {
-        user.setStatus("offline");
+    public void logout() {
+        if (currentUser != null) {
+            currentUser.setStatus("offline");
+            userRepository.updateUser(currentUser);
+            currentUser = null; // Clear the current user on logout
+        }
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    // Add method for changing profile photo
+    public void changeProfilePhoto(User user, String newPhotoPath) throws IOException {
+        user.setProfilePhotoPath(newPhotoPath);
+        userRepository.updateUser(user); // Assuming the user repository has an update method
+    }
+
+    // Add method for changing cover photo
+    public void changeCoverPhoto(User user, String newPhotoPath) throws IOException {
+        user.setCoverPhotoPath(newPhotoPath);
+        userRepository.updateUser(user); // Assuming the user repository has an update method
+    }
+
+    // Update bio method
+    public void updateBio(User user, String newBio) {
+        user.setBio(newBio);
         userRepository.updateUser(user);
     }
 
-    // Update profile details
-    public boolean updateProfile(String userId, String bio, String profilePhotoPath, String coverPhotoPath) {
-        User user = userRepository.findUserByEmail(userId);
-        if (user == null) {
-            return false;
-        }
-        if (bio != null) user.setBio(bio);
-        if (profilePhotoPath != null) user.setProfilePhotoPath(profilePhotoPath);
-        if (coverPhotoPath != null) user.setCoverPhotoPath(coverPhotoPath);
+    // Update password method
+    public void updatePassword(User user, String newPassword) {
+        user.setPassword(HashUtils.hashPassword(newPassword)); // Hashing the new password
         userRepository.updateUser(user);
-        return true;
-    }
-
-    // Change password
-    public boolean changePassword(String userId, String oldPassword, String newPassword) {
-        User user = userRepository.findUserByEmail(userId);
-        if (user == null || !HashUtils.verifyPassword(oldPassword, user.getPassword())) {
-            return false;
-        }
-        user.setPassword(HashUtils.hashPassword(newPassword));
-        userRepository.updateUser(user);
-        return true;
     }
 
     // Fetch posts for a user
