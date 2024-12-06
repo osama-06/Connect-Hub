@@ -1,45 +1,45 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Backend;
 
-
-import java.util.UUID;
+import java.util.List;
 
 public class UserService {
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserService() {
+        this.userRepository = new UserRepository();
     }
 
-    UserService() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public boolean signup(String email, String username, String password, String dateOfBirth) {
+    // Signup method with email validation, password hashing, and saving the user to users.json
+    public boolean signup(String email, String username, String password, String dob) {
+        // Check if the email already exists
         if (userRepository.findUserByEmail(email) != null) {
             return false; // Email already exists
         }
-        String hashedPassword = HashUtils.hashPassword(password);
-        User user = new User(UUID.randomUUID().toString(), email, username, hashedPassword, dateOfBirth, "offline");
-        userRepository.addUser(user);
-        return true;
+
+        // Create a new User object with hashed password
+        String userId = generateUserId(); // You can implement a method to generate a unique user ID
+        User newUser = new User(userId, email, username, HashUtils.hashPassword(password), dob, "offline");
+
+        // Add the user to the repository and save to the file
+        userRepository.addUser(newUser);
+
+        return true; // Signup successful
     }
 
+    // Generate a unique user ID (could be based on current time or UUID)
+    private String generateUserId() {
+        // Implement your logic for generating a unique user ID, e.g., using UUID or current timestamp
+        return String.valueOf(System.currentTimeMillis());
+    }
+
+    // Login method to verify user credentials (email and password)
     public User login(String email, String password) {
         User user = userRepository.findUserByEmail(email);
         if (user != null && HashUtils.verifyPassword(password, user.getPassword())) {
-            user.setStaues("online");
-            userRepository.updateUser(user);
-            return user;
+            return user; // Login successful
         }
         return null; // Invalid credentials
     }
-
-    public void logout(User user) {
-        user.setStaues("offline");
-        userRepository.updateUser(user);
-    }
 }
+

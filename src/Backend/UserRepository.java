@@ -1,9 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Backend;
-
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -32,7 +27,7 @@ public class UserRepository {
     }
 
     // Save users to JSON file
-    private void saveUsers() {
+    public void saveUsers() {
         try (Writer writer = new FileWriter(FILE_PATH)) {
             new Gson().toJson(users, writer);
         } catch (IOException e) {
@@ -40,20 +35,13 @@ public class UserRepository {
         }
     }
 
+    // Add a new user
     public void addUser(User user) {
         users.add(user);
-        saveUsers();
+        saveUsers(); // Save the updated user list
     }
 
     public User findUserByEmail(String email) {
         return users.stream().filter(user -> user.getEmail().equals(email)).findFirst().orElse(null);
     }
-
-    public void updateUser(User user) {
-        users.removeIf(u -> u.getUserid().equals(user.getUserid()));
-        users.add(user);
-        saveUsers();
-    }
-
-
 }

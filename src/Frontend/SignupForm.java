@@ -3,17 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Frontend;
+import Backend.User;
 import Backend.UserService;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignupForm extends JPanel {
     private final UserService userService;
+    private final CardLayout cardLayout;
+    private final JPanel cardPanel;
 
-    public SignupForm(UserService userService) {
+    public SignupForm(UserService userService, CardLayout cardLayout, JPanel cardPanel) {
         this.userService = userService;
+        this.cardLayout = cardLayout;
+        this.cardPanel = cardPanel;
         setLayout(new GridLayout(6, 2, 10, 10));
 
         JLabel emailLabel = new JLabel("Email:");
@@ -34,9 +41,26 @@ public class SignupForm extends JPanel {
             String password = new String(passwordField.getPassword());
             String dob = dobField.getText();
 
+            // Check if all fields are filled
+            if (email.isEmpty() || username.isEmpty() || password.isEmpty() || dob.isEmpty()) {
+                resultLabel.setText("Please fill all fields.");
+                resultLabel.setForeground(Color.RED);
+                return;
+            }
+
+            // Validate email format
+            if (!isValidEmail(email)) {
+                resultLabel.setText("Invalid email format.");
+                resultLabel.setForeground(Color.RED);
+                return;
+            }
+
+            // Try to sign up
             if (userService.signup(email, username, password, dob)) {
                 resultLabel.setText("Signup successful!");
                 resultLabel.setForeground(Color.GREEN);
+                // Switch back to main menu
+                cardLayout.show(cardPanel, "MainMenu");
             } else {
                 resultLabel.setText("Email already exists.");
                 resultLabel.setForeground(Color.RED);
@@ -53,5 +77,13 @@ public class SignupForm extends JPanel {
         add(dobField);
         add(signupButton);
         add(resultLabel);
+    }
+
+    // Method to check if email format is valid using regex
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 }

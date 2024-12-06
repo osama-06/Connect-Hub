@@ -12,7 +12,7 @@ import javax.swing.SwingUtilities;
 public class UserAccManagement {
   public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            UserService userService = new UserService(new UserRepository()); // Ensure UserService is implemented
+            UserService userService = new UserService(); // Ensure UserService is implemented
             MainFrame frame = new MainFrame(userService);
             frame.setVisible(true);
         });
