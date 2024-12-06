@@ -1,8 +1,6 @@
-
 package Frontend;
-import Backend.User;
-import Backend.UserService;
 
+import Backend.UserService;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,81 +9,97 @@ import java.util.regex.Pattern;
 
 public class SignupForm extends JPanel {
     private final UserService userService;
-    private final CardLayout cardLayout ;
-    private final JPanel cardPanel ;
+    private final CardLayout cardLayout;
+    private final JPanel cardPanel;
 
     public SignupForm(UserService userService, CardLayout cardLayout, JPanel cardPanel) {
-    this.userService = userService;
-    this.cardLayout = cardLayout;
-    this.cardPanel = cardPanel;
-    
-    setLayout(new GridLayout(6, 2, 10, 10));
+        this.userService = userService;
+        this.cardLayout = cardLayout;
+        this.cardPanel = cardPanel;
 
-    JLabel emailLabel = new JLabel("Email:");
-    JTextField emailField = new JTextField();
-    JLabel usernameLabel = new JLabel("Username:");
-    JTextField usernameField = new JTextField();
-    JLabel passwordLabel = new JLabel("Password:");
-    JPasswordField passwordField = new JPasswordField();
-    JLabel dobLabel = new JLabel("Date of Birth (YYYY-MM-DD):");
-    JTextField dobField = new JTextField();
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
 
-    JButton signupButton = new JButton("Signup");
-    JLabel resultLabel = new JLabel("");
+        JLabel emailLabel = new JLabel("Email:");
+        JTextField emailField = new JTextField(20);
+        JLabel usernameLabel = new JLabel("Username:");
+        JTextField usernameField = new JTextField(20);
+        JLabel passwordLabel = new JLabel("Password:");
+        JPasswordField passwordField = new JPasswordField(20);
+        JLabel dobLabel = new JLabel("Date of Birth (YYYY-MM-DD):");
+        JTextField dobField = new JTextField(20);
 
-    signupButton.addActionListener((ActionEvent e) -> {
-        String email = emailField.getText();
-        String username = usernameField.getText();
-        String password = new String(passwordField.getPassword());
-        String dob = dobField.getText();
+        JButton signupButton = new JButton("Signup");
+        JLabel resultLabel = new JLabel("");
 
-        // Check if all fields are filled
-        if (email.isEmpty() || username.isEmpty() || password.isEmpty() || dob.isEmpty()) {
-            resultLabel.setText("Please fill all fields.");
-            resultLabel.setForeground(Color.RED);
-            return;
-        }
+        signupButton.addActionListener((ActionEvent e) -> {
+            String email = emailField.getText();
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
+            String dob = dobField.getText();
 
-        // Validate email format
-        if (!isValidEmail(email)) {
-            resultLabel.setText("Invalid email format.");
-            resultLabel.setForeground(Color.RED);
-            return;
-        }
+            // Check if all fields are filled
+            if (email.isEmpty() || username.isEmpty() || password.isEmpty() || dob.isEmpty()) {
+                resultLabel.setText("Please fill all fields.");
+                resultLabel.setForeground(Color.RED);
+                return;
+            }
 
-        // Try to sign up
-        if (userService.signup(email, username, password, dob)) {
-            // Show successful signup message
-            resultLabel.setText("Signup successful!");
-            resultLabel.setForeground(Color.GREEN);
+            // Validate email format
+            if (!isValidEmail(email)) {
+                resultLabel.setText("Invalid email format.");
+                resultLabel.setForeground(Color.RED);
+                return;
+            }
 
-            // Wait for a short duration to let the user read the success message
-            Timer timer = new Timer(2000, (ActionEvent e1) -> {
-                // After 2 seconds, go back to the MainMenu
+            // Try to sign up
+            if (userService.signup(email, username, password, dob)) {
+                JOptionPane.showMessageDialog(this, "Signup Successful!");
+                // Switch back to the main menu after successful signup
                 cardLayout.show(cardPanel, "MainMenu");
-            });
-            timer.setRepeats(false);
-            timer.start();
-        } else {
-            resultLabel.setText("Email already exists.");
-            resultLabel.setForeground(Color.RED);
-        }
-    });
+            } else {
+                resultLabel.setText("Email already exists.");
+                resultLabel.setForeground(Color.RED);
+            }
+        });
 
-    add(emailLabel);
-    add(emailField);
-    add(usernameLabel);
-    add(usernameField);
-    add(passwordLabel);
-    add(passwordField);
-    add(dobLabel);
-    add(dobField);
-    add(signupButton);
-    add(resultLabel);
-}
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(emailLabel, gbc);
 
+        gbc.gridx = 1;
+        add(emailField, gbc);
 
-    // Method to check if email format is valid using regex
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        add(usernameLabel, gbc);
+
+        gbc.gridx = 1;
+        add(usernameField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        add(passwordLabel, gbc);
+
+        gbc.gridx = 1;
+        add(passwordField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        add(dobLabel, gbc);
+
+        gbc.gridx = 1;
+        add(dobField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        add(signupButton, gbc);
+
+        gbc.gridx = 1;
+        add(resultLabel, gbc);
+    }
+
     private boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(emailRegex);

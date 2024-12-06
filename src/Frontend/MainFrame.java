@@ -1,4 +1,3 @@
-
 package Frontend;
 
 import Backend.UserService;
@@ -6,16 +5,16 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
-    private CardLayout cardLayout; // To manage switching between views
+    private CardLayout cardLayout;
     private JPanel cardPanel;
     private UserService userService;
 
     public MainFrame(UserService userService) {
-        
+        this.userService = userService;
 
         // Setup JFrame
         setTitle("User Management System");
-        setSize(400, 300);
+        setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -28,7 +27,7 @@ public class MainFrame extends JFrame {
         JPanel loginForm = new LoginForm(userService, this::onLoginSuccess);
         JPanel signupForm = new SignupForm(userService, cardLayout, cardPanel);
 
-// Add views to cardPanel
+        // Add views to cardPanel
         cardPanel.add(mainMenuPanel, "MainMenu");
         cardPanel.add(loginForm, "Login");
         cardPanel.add(signupForm, "Signup");
@@ -38,26 +37,51 @@ public class MainFrame extends JFrame {
 
         // Display the main menu
         cardLayout.show(cardPanel, "MainMenu");
+
+        // Make the frame visible
+        setVisible(true);
     }
 
     // Main Menu Panel (Choose Login or Signup)
     private JPanel createMainMenuPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        JLabel welcomeLabel = new JLabel("Welcome to the User Management System", JLabel.CENTER);
-        panel.add(welcomeLabel, BorderLayout.NORTH);
+        // Create a panel with GridBagLayout for full centering
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
 
-        JPanel buttonPanel = new JPanel(new FlowLayout());
+        // Create and center the welcome label
+        JLabel welcomeLabel = new JLabel("Welcome to the User Management System", JLabel.CENTER);
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        
+        // Set GridBagConstraints to center the label
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2; // Span both columns to make it centered
+        panel.add(welcomeLabel, gbc);
+
+        // Create the buttons (Login and Signup)
         JButton loginButton = new JButton("Login");
         JButton signupButton = new JButton("Signup");
 
-        // Action listeners for buttons
+        // Set buttons size and alignment
+        loginButton.setPreferredSize(new Dimension(150, 40));
+        signupButton.setPreferredSize(new Dimension(150, 40));
+
+        // Add action listeners to the buttons
         loginButton.addActionListener(e -> cardLayout.show(cardPanel, "Login"));
         signupButton.addActionListener(e -> cardLayout.show(cardPanel, "Signup"));
 
+        // Add the buttons to the panel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));  // Center the buttons
         buttonPanel.add(loginButton);
         buttonPanel.add(signupButton);
 
-        panel.add(buttonPanel, BorderLayout.CENTER);
+        // Set GridBagConstraints to center the button panel
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2; // Span both columns to center the buttons
+        panel.add(buttonPanel, gbc);
+
         return panel;
     }
 
@@ -66,8 +90,4 @@ public class MainFrame extends JFrame {
         JOptionPane.showMessageDialog(this, "Login successful!");
         cardLayout.show(cardPanel, "MainMenu"); // Return to the main menu or implement a new post-login screen
     }
-
-    
-    
 }
-

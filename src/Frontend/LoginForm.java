@@ -1,4 +1,3 @@
-
 package Frontend;
 
 import Backend.User;
@@ -6,7 +5,8 @@ import Backend.UserService;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+
+
 
 public class LoginForm extends JPanel {
     private final UserService userService;
@@ -16,16 +16,18 @@ public class LoginForm extends JPanel {
         this.userService = userService;
         this.onLoginSuccess = onLoginSuccess;
 
-        setLayout(new GridLayout(4, 2, 10, 10));
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10); // Add padding around components
 
         JLabel emailLabel = new JLabel("Email:");
-        JTextField emailField = new JTextField();
+        JTextField emailField = new JTextField(20); // Adjust text field size
         JLabel passwordLabel = new JLabel("Password:");
-        JPasswordField passwordField = new JPasswordField();
+        JPasswordField passwordField = new JPasswordField(20); // Adjust text field size
         JButton loginButton = new JButton("Login");
-        JLabel resultLabel = new JLabel("");
+        JLabel resultLabel = new JLabel(" ");
 
-        loginButton.addActionListener((ActionEvent e) -> {
+        loginButton.addActionListener(e -> {
             String email = emailField.getText();
             String password = new String(passwordField.getPassword());
 
@@ -40,11 +42,25 @@ public class LoginForm extends JPanel {
             }
         });
 
-        add(emailLabel);
-        add(emailField);
-        add(passwordLabel);
-        add(passwordField);
-        add(loginButton);
-        add(resultLabel);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(emailLabel, gbc);
+        
+        gbc.gridx = 1;
+        add(emailField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        add(passwordLabel, gbc);
+        
+        gbc.gridx = 1;
+        add(passwordField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        add(loginButton, gbc);
+
+        gbc.gridx = 1;
+        add(resultLabel, gbc);
     }
 }
