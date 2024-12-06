@@ -6,12 +6,15 @@ package Backend;
  * @author User
  */
 public class User {
-     private String userid;
-   private String email;
-   private String username;
-   private String password; //Hashed password
-   private String dateOfBirth;
-   private String status; //online or offline
+    private String userid;
+    private String email;
+    private String username;
+    private String password; // Hashed password
+    private String dateOfBirth;
+    private String status; // Online or offline
+    private String profilePhotoPath;
+    private String coverPhotoPath;
+    private String bio;
 
     public User(String userid, String email, String username, String password, String dateOfBirth, String staus) {
         this.userid = userid;
@@ -21,7 +24,7 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.status = status;
     }
-
+    
     public String getUserid() {
         return userid;
     }
@@ -69,6 +72,30 @@ public class User {
 
     public void setStatus(String staues) {
         this.status = staues;
+    }
+
+    public String getProfilePhotoPath() {
+        return profilePhotoPath;
+    }
+
+    public void setProfilePhotoPath(String profilePhotoPath) {
+        this.profilePhotoPath = profilePhotoPath;
+    }
+
+    public String getCoverPhotoPath() {
+        return coverPhotoPath;
+    }
+
+    public void setCoverPhotoPath(String coverPhotoPath) {
+        this.coverPhotoPath = coverPhotoPath;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
     
    

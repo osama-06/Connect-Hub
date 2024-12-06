@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Frontend;
 
 import java.awt.BorderLayout;
@@ -11,10 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-/**
- *
- * @author User
- */
+
 public class SuccessPanel extends JPanel {
     public SuccessPanel(CardLayout cardLayout, JPanel cardPanel) {
         setLayout(new BorderLayout());
