@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.print.DocFlavor.STRING;
 
-public class user {
+public class User {
      private String userId;
     private String username;
     private String email;
@@ -22,8 +22,8 @@ public class user {
 
                 
 
-           public user (){}
-        public user(String userId, String username, String email, String hashedPassword, 
+           public User (){}
+        public User(String userId, String username, String email, String hashedPassword, 
                     String bio, String profilePhoto, String coverPhoto, String status, 
                     List<Friend> friends, List<Post> posts) {
             this.userId = userId;

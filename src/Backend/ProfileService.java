@@ -12,7 +12,7 @@ public class ProfileService {
     }
 
     // Change the user's profile photo
-    public void changeProfilePhoto(user user, String newPhotoPath) throws IOException {
+    public void changeProfilePhoto(User user, String newPhotoPath) throws IOException {
         if (newPhotoPath == null || newPhotoPath.isEmpty()) {
             throw new IllegalArgumentException("Profile photo path cannot be empty.");
         }
@@ -22,7 +22,7 @@ public class ProfileService {
     }
 
     // Change the user's cover photo
-    public void changeCoverPhoto(user user, String newPhotoPath) throws IOException {
+    public void changeCoverPhoto(User user, String newPhotoPath) throws IOException {
         if (newPhotoPath == null || newPhotoPath.isEmpty()) {
             throw new IllegalArgumentException("Cover photo path cannot be empty.");
         }
@@ -32,7 +32,7 @@ public class ProfileService {
     }
 
     // Update the user's bio
-    public void updateBio(user user, String newBio) throws IOException {
+    public void updateBio(User user, String newBio) throws IOException {
         if (newBio == null || newBio.trim().isEmpty()) {
             throw new IllegalArgumentException("Bio cannot be empty.");
         }
@@ -42,7 +42,7 @@ public class ProfileService {
     }
 
     // Update the user's password
-    public void updatePassword(user user, String newPassword) throws IOException {
+    public void updatePassword(User user, String newPassword) throws IOException {
         if (newPassword == null || newPassword.trim().isEmpty()) {
             throw new IllegalArgumentException("Password cannot be empty.");
         }
@@ -51,14 +51,14 @@ public class ProfileService {
         databaseManager.updateUser(user);
         System.out.println("Password updated successfully.");}
         // Method to create a post
-    public void createPost(user user, String text, String imagePath) throws IOException {
+    public void createPost(User user, String text, String imagePath) throws IOException {
         Post newPost = new Post(text, imagePath);
         user.addPost(newPost);
         databaseManager.updateUser(user);  // Save the updated user (with new post)
     }
 
     // Method to delete a post
-    public void deletePost(user user, Post post) throws IOException {
+    public void deletePost(User user, Post post) throws IOException {
         user.removePost(post);
         databaseManager.updateUser(user);  // Save the updated user (without deleted post)
     }

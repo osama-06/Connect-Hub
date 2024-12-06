@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class NewsFeed extends JFrame {
-    private user currentUser;
+    private User currentUser;
     private DatabaseManager databaseManager;
     private ProfileService profileService;
     private JTextArea postTextArea;
@@ -15,7 +15,7 @@ public class NewsFeed extends JFrame {
     private String selectedImagePath = null;
     private JPanel feedPanel;
 
-    public NewsFeed(DatabaseManager databaseManager, user currentUser) {
+    public NewsFeed(DatabaseManager databaseManager, User currentUser) {
         this.databaseManager = databaseManager;
         this.profileService = new ProfileService(databaseManager);
         this.currentUser = currentUser;

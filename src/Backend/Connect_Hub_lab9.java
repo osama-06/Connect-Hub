@@ -22,7 +22,7 @@ import java.io.IOException;
 public class Connect_Hub_lab9 extends JFrame {
     private DatabaseManager databaseManager;
     private ProfileService profileService;
-    private user currentUser;
+    private User currentUser;
 
     private JTextArea bioField;
     private JPasswordField passwordField;
@@ -35,7 +35,7 @@ public class Connect_Hub_lab9 extends JFrame {
     private JButton addFriendButton; // Button to add friend
     private JList<String> friendsList; // List to display friends
 
-    public Connect_Hub_lab9(DatabaseManager databaseManager, user user) {
+    public Connect_Hub_lab9(DatabaseManager databaseManager, User user) {
         this.databaseManager = databaseManager;
         this.profileService = new ProfileService(databaseManager);
         this.currentUser = user;
@@ -263,7 +263,7 @@ public class Connect_Hub_lab9 extends JFrame {
     public static void main(String[] args) {
         try {
             DatabaseManager databaseManager = new DatabaseManager();
-            user mockUser = databaseManager.getUserById("123");
+            User mockUser = databaseManager.getUserById("123");
 
             Connect_Hub_lab9 profilePage = new Connect_Hub_lab9(databaseManager, mockUser);
             profilePage.setVisible(true);

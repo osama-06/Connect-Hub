@@ -9,7 +9,7 @@ import java.io.*;
 public class DatabaseManager {
 
     // Save or update a user's data in a file named after their user ID
-    public void updateUser(user user) throws IOException {
+    public void updateUser(User user) throws IOException {
         String userData = serializeUser(user);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(user.getUserId() + ".txt"))) {
             writer.write(userData);
@@ -17,7 +17,7 @@ public class DatabaseManager {
     }
 
     // Fetch a user's data from the file
-    public user getUserById(String userId) throws IOException {
+    public User getUserById(String userId) throws IOException {
         File file = new File(userId + ".txt");
         if (!file.exists()) {
             throw new FileNotFoundException("User database not found for user ID: " + userId);
@@ -34,7 +34,7 @@ public class DatabaseManager {
     }
 
     // Serialize user to plain text (including posts)
-    private String serializeUser(user user) {
+    private String serializeUser(User user) {
         StringBuilder sb = new StringBuilder();
         sb.append(user.getUserId()).append("\n")
           .append(user.getUsername()).append("\n")
@@ -59,9 +59,9 @@ public class DatabaseManager {
 
     return sb.toString();
 }
-private user deserializeUser(String userData) {
+private User deserializeUser(String userData) {
     String[] lines = userData.split("\n");
-    user user = new user();
+    User user = new User();
     user.setUserId(lines[0]);
     user.setUsername(lines[1]);
     user.setEmail(lines[2]);
