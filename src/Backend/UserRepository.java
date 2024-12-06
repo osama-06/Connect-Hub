@@ -13,18 +13,31 @@ public class UserRepository {
     private List<User> users;
 
     public UserRepository() {
+        initializeFile();
         this.users = loadUsers();
     }
 
     // Load users from JSON file
     private List<User> loadUsers() {
-        try (Reader reader = new FileReader(FILE_PATH)) {
-            Type listType = new TypeToken<ArrayList<User>>() {}.getType();
-            return new Gson().fromJson(reader, listType);
-        } catch (IOException e) {
-            return new ArrayList<>();
-        }
+    File file = new File(FILE_PATH);
+
+    // Check if the file exists and is not empty
+    if (!file.exists() || file.length() == 0) {
+        return new ArrayList<>(); // Return an empty list
     }
+
+    try (Reader reader = new FileReader(file)) {
+        Type listType = new TypeToken<ArrayList<User>>() {}.getType();
+        List<User> loadedUsers = new Gson().fromJson(reader, listType);
+
+        // If the file contains invalid JSON, return an empty list
+        return loadedUsers != null ? loadedUsers : new ArrayList<>();
+    } catch (IOException e) {
+        e.printStackTrace();
+        return new ArrayList<>();
+    }
+}
+
 
     // Save users to JSON file
     private void saveUsers() {
@@ -49,4 +62,15 @@ public class UserRepository {
         users.add(user);
         saveUsers();
     }
+    private void initializeFile() {
+    File file = new File(FILE_PATH);
+    if (!file.exists()) {
+        try (Writer writer = new FileWriter(file)) {
+            writer.write("[]"); // Initialize with an empty JSON array
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
 }
