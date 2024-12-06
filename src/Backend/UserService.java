@@ -14,6 +14,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    UserService() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public boolean signup(String email, String username, String password, String dateOfBirth) {
         if (userRepository.findUserByEmail(email) != null) {
             return false; // Email already exists

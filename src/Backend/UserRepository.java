@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository {
-    private static final String FILE_PATH = "database/users.json";
+    private static final String FILE_PATH = "users.json";
     private List<User> users;
 
     public UserRepository() {
@@ -50,11 +50,10 @@ public class UserRepository {
     }
 
     public void updateUser(User user) {
-        users.removeIf(u -> u.getUserId().equals(user.getUserId()));
+        users.removeIf(u -> u.getUserid().equals(user.getUserid()));
         users.add(user);
         saveUsers();
     }
 
-    User findUserByEmail(String email) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+
+}

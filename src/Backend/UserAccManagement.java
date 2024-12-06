@@ -3,13 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Backend;
-
+import Frontend.MainFrame;
+import javax.swing.SwingUtilities;
 /**
  *
  * @author User
  */
 public class UserAccManagement {
   public static void main(String[] args) {
-        // TODO code application logic here
-    }
+        SwingUtilities.invokeLater(() -> {
+            UserService userService = new UserService(new UserRepository()); // Ensure UserService is implemented
+            MainFrame frame = new MainFrame(userService);
+            frame.setVisible(true);
+        });
 }
+  }
