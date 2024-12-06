@@ -1,0 +1,15 @@
+123
+John Doe
+john.doe@example.com
+hashed_passw54354ord_123
+Software Developer 1237667
+C:\Users\User\Documents\NetBeansProjects\githubtest\Connect-Hub\images\profile.jpg
+C:\Users\User\Documents\NetBeansProjects\githubtest\Connect-Hub\images\cover.jpg
+C:\Users\User\Documents\NetBeansProjects\githubtest\Connect-Hub\images\new_profile.jpg
+Posts:
+habibi ya||null
+767||/path/to/profile/photo
+uykuy||C:\Users\User\Documents\NetBeansProjects\githubtest\Connect-Hub\images\cover.jpg
+Friends:
+767||/path/to/profile/photo
+habibi ya||null
