@@ -10,6 +10,6 @@ package Backend;
  */
 public class UserAccManagement {
   public static void main(String[] args) {
-      System.out.println("anss ");  // TODO code application logic here
+        // TODO code application logic here
     }
 }
