@@ -9,7 +9,7 @@ import java.io.File;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-public class Profile_Management extends JFrame {
+public class ProfileManagement extends JFrame {
     private DatabaseManager databaseManager;
     private ProfileService profileService;
     private user currentUser;
@@ -25,7 +25,7 @@ public class Profile_Management extends JFrame {
     private JButton addFriendButton; // Button to add friend
     private JList<String> friendsList; // List to display friends
 
-    public Profile_Management(DatabaseManager databaseManager, user user) {
+    public ProfileManagement(DatabaseManager databaseManager, user user) {
         this.databaseManager = databaseManager;
         this.profileService = new ProfileService(databaseManager);
         this.currentUser = user;
