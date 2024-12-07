@@ -9,11 +9,11 @@ import java.io.IOException;
 import java.util.*;
 
 public class FriendManagement {
-    private static final String FRIENDS_FILE = "friends.json";
-    private static final String REQUESTS_FILE = "friend_requests.json";
-    private static final String BLOCKED_FILE = "blocked.json";
-    private static final String STATUS_FILE = "status.json";  
-    private static final String USERS_FILE = "users.json";  
+    private static final String FRIENDS_FILE = "friends11.json";
+    private static final String REQUESTS_FILE = "friend_requests11.json";
+    private static final String BLOCKED_FILE = "blocked11.json";
+    private static final String STATUS_FILE = "status11.json";  
+    private static final String USERS_FILE = "users11.json";  
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private String currentUserId;  // Store the current user ID
