@@ -244,12 +244,13 @@ public class ProfileManagement extends JFrame {
     }
 
     private void styleButton(JButton button, int width, int height) {
-        button.setPreferredSize(new Dimension(width, height));
-        button.setBackground(new Color(66, 135, 245));
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Arial", Font.BOLD, 14));
-        button.setFocusPainted(false);
-    }
+    button.setPreferredSize(new Dimension(width, height));
+    button.setBackground(new Color(66, 135, 245));
+    button.setForeground(Color.BLACK); // Change text color to black
+    button.setFont(new Font("Arial", Font.BOLD, 14));
+    button.setFocusPainted(false);
+}
+
 
     
 }

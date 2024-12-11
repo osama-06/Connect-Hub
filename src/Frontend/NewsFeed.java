@@ -170,7 +170,7 @@ public class NewsFeed extends JFrame {
     private void styleButton(JButton button, int width, int height) {
         button.setPreferredSize(new Dimension(width, height));
         button.setBackground(new Color(66, 135, 245));
-        button.setForeground(Color.WHITE);
+        button.setForeground(Color.BLACK);
         button.setFont(new Font("Segoe UI", Font.BOLD, 14));
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
