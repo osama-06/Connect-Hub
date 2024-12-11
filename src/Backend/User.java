@@ -33,6 +33,21 @@ public class User {
                 
 
            public User (){}
+
+    public User(String userid, String username, String email, String password, String bio, String profilePhoto, String coverPhoto, String status, List<Friend> friends, List<Post> posts, String dateOfBirth) {
+        this.userid = userid;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.bio = bio;
+        this.profilePhoto = profilePhoto;
+        this.coverPhoto = coverPhoto;
+        this.status = status;
+        this.friends = friends;
+        this.posts = posts;
+        this.dateOfBirth = dateOfBirth;
+    }
+           
         public User(String userId, String username, String email, String hashedPassword, 
                     String bio, String profilePhoto, String coverPhoto, String status, 
                     List<Friend> friends, List<Post> posts) {

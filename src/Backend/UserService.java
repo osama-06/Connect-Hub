@@ -1,6 +1,7 @@
 
 package Backend;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +17,10 @@ public class UserService {
             return false; // Email already exists
         }
         String hashedPassword = HashUtils.hashPassword(password);
-        User user = new User(UUID.randomUUID().toString(), email, username, hashedPassword, dateOfBirth, "offline");
+        
+        User user = new User(UUID.randomUUID().toString(),username, email, hashedPassword, null, 
+        null, null, "offline", new ArrayList<>(),
+        new ArrayList<>(), dateOfBirth);
         userRepository.addUser(user);
         return true;
     }
