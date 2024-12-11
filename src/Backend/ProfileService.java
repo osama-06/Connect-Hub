@@ -46,7 +46,8 @@ public class ProfileService {
             throw new IllegalArgumentException("Password cannot be empty.");
         }
         // Here, for simplicity, we won't hash the password. In a real-world app, always hash passwords!
-        user.setPassword(newPassword);
+        String newhashedPassword = HashUtils.hashPassword(newPassword);
+        user.setPassword(newhashedPassword);
         databaseManager.updateUser(user);
         System.out.println("Password updated successfully.");
     }
