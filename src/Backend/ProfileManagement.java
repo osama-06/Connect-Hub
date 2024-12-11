@@ -255,7 +255,7 @@ public class ProfileManagement extends JFrame {
             DatabaseManager databaseManager = new DatabaseManager();
             User mockUser = databaseManager.getUserById("123");
 
-            Connect_Hub_lab9 profilePage = new Connect_Hub_lab9(databaseManager, mockUser);
+            ProfileManagement profilePage = new ProfileManagement(databaseManager, mockUser);
             profilePage.setVisible(true);
         } catch (Exception e) {
             e.printStackTrace();
