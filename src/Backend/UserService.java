@@ -1,4 +1,3 @@
-
 package Backend;
 
 import java.util.ArrayList;
@@ -9,6 +8,7 @@ import java.util.UUID;
 public class UserService {
 
     private final DatabaseManager databaseManager;
+    private User loggedInUser;  // Store the logged-in user
 
     public UserService(DatabaseManager databaseManager) {
         this.databaseManager = databaseManager;
@@ -30,17 +30,23 @@ public class UserService {
     public User login(String email, String password) {
         Optional<User> userOptional = databaseManager.findUserByEmail(email);
         if (userOptional.isPresent() && HashUtils.verifyPassword(password, userOptional.get().getPassword())) {
-            User user = userOptional.get();
-            user.setStatus("online");
-            databaseManager.updateUser(user);
-            return user;
+            loggedInUser = userOptional.get(); // Store the logged-in user
+            loggedInUser.setStatus("online");
+            databaseManager.updateUser(loggedInUser);
+            return loggedInUser;
         }
         return null; // Invalid credentials
     }
 
     public void logout(User user) {
-        user.setStatus("offline");
-        databaseManager.updateUser(user);
+        if (user != null) {
+            user.setStatus("offline");
+            databaseManager.updateUser(user);
+        }
+    }
+
+    // Getter for the logged-in user
+    public User getLoggedInUser() {
+        return loggedInUser;
     }
 }
-

@@ -1,8 +1,10 @@
 package Frontend;
 
 import Backend.UserService;
+import Backend.User;
 import javax.swing.*;
 import java.awt.*;
+import Backend.*;
 
 public class MainFrame extends JFrame {
     private CardLayout cardLayout;
@@ -87,7 +89,15 @@ public class MainFrame extends JFrame {
 
     // Action to handle successful login
     private void onLoginSuccess() {
-        JOptionPane.showMessageDialog(this, "Login successful!");
-        cardLayout.show(cardPanel, "MainMenu"); // Return to the main menu or implement a new post-login screen
+        // Assuming the user is successfully logged in, get the logged-in user
+        User loggedInUser = userService.getLoggedInUser(); // Adjust this method in your UserService to return the logged-in user
+        DatabaseManager databaseManager = null;
+        
+        // Open the ProfileManagement frame with user details
+        ProfileManagement profileManagement = new ProfileManagement(databaseManager, loggedInUser);
+        profileManagement.setVisible(true);
+
+        // Hide the current login window
+        this.setVisible(false);
     }
 }

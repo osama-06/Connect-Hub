@@ -251,15 +251,5 @@ public class ProfileManagement extends JFrame {
         button.setFocusPainted(false);
     }
 
-    public static void main(String[] args) {
-        try {
-            DatabaseManager databaseManager = new DatabaseManager();
-            User mockUser = databaseManager.getUserById("123");
-
-            ProfileManagement profilePage = new ProfileManagement(databaseManager, mockUser);
-            profilePage.setVisible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    
 }
