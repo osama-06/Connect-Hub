@@ -14,6 +14,11 @@ public class UserService {
         this.databaseManager = databaseManager;
     }
 
+    public DatabaseManager getDatabaseManager() {
+        return databaseManager;
+    }
+    
+
     public boolean signup(String email, String username, String password, String dateOfBirth) {
         if (databaseManager.findUserByEmail(email).isPresent()) {
             return false; // Email already exists

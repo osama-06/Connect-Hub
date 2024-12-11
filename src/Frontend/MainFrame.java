@@ -91,10 +91,10 @@ public class MainFrame extends JFrame {
     private void onLoginSuccess() {
         // Assuming the user is successfully logged in, get the logged-in user
         User loggedInUser = userService.getLoggedInUser(); // Adjust this method in your UserService to return the logged-in user
-        DatabaseManager databaseManager = null;
+        
         
         // Open the ProfileManagement frame with user details
-        ProfileManagement profileManagement = new ProfileManagement(databaseManager, loggedInUser);
+        ProfileManagement profileManagement = new ProfileManagement(userService.getDatabaseManager(), loggedInUser);
         profileManagement.setVisible(true);
 
         // Hide the current login window
