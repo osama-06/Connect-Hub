@@ -31,6 +31,7 @@ public class SignupForm extends JPanel {
         JTextField dobField = new JTextField(20);
 
         JButton signupButton = new JButton("Signup");
+        JButton goBackButton = new JButton("Go Back");
         JLabel resultLabel = new JLabel("");
 
         signupButton.addActionListener((ActionEvent e) -> {
@@ -64,6 +65,12 @@ public class SignupForm extends JPanel {
             }
         });
 
+        // Go Back button action listener
+        goBackButton.addActionListener((ActionEvent e) -> {
+            cardLayout.show(cardPanel, "MainMenu");  // Switch to the main menu
+        });
+
+        // Layout the components
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(emailLabel, gbc);
@@ -92,11 +99,16 @@ public class SignupForm extends JPanel {
         gbc.gridx = 1;
         add(dobField, gbc);
 
+        // Place the buttons in the next row
         gbc.gridx = 0;
         gbc.gridy = 4;
         add(signupButton, gbc);
 
         gbc.gridx = 1;
+        add(goBackButton, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
         add(resultLabel, gbc);
     }
 

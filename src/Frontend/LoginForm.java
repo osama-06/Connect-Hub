@@ -10,10 +10,14 @@ import Backend.*;
 public class LoginForm extends JPanel {
     private final UserService userService;
     private final Runnable onLoginSuccess;
+    private final CardLayout cardLayout;
+    private final JPanel cardPanel;
 
-    public LoginForm(UserService userService, Runnable onLoginSuccess) {
+    public LoginForm(UserService userService, Runnable onLoginSuccess, CardLayout cardLayout, JPanel cardPanel) {
         this.userService = userService;
         this.onLoginSuccess = onLoginSuccess;
+        this.cardLayout = cardLayout;
+        this.cardPanel = cardPanel;
 
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -24,8 +28,10 @@ public class LoginForm extends JPanel {
         JLabel passwordLabel = new JLabel("Password:");
         JPasswordField passwordField = new JPasswordField(20); // Adjust text field size
         JButton loginButton = new JButton("Login");
+        JButton goBackButton = new JButton("Go Back");
         JLabel resultLabel = new JLabel(" ");
 
+        // Login button action
         loginButton.addActionListener(e -> {
             String email = emailField.getText();
             String password = new String(passwordField.getPassword());
@@ -41,6 +47,12 @@ public class LoginForm extends JPanel {
             }
         });
 
+        // Go Back button action
+        goBackButton.addActionListener(e -> {
+            cardLayout.show(cardPanel, "MainMenu");  // Switch to the main menu
+        });
+
+        // Layout the components
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(emailLabel, gbc);
@@ -59,7 +71,12 @@ public class LoginForm extends JPanel {
         gbc.gridy = 2;
         add(loginButton, gbc);
 
+        // Add the Go Back button in the same row as Login
         gbc.gridx = 1;
+        add(goBackButton, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
         add(resultLabel, gbc);
     }
 }

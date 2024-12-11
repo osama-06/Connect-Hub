@@ -26,7 +26,7 @@ public class MainFrame extends JFrame {
 
         // Create views
         JPanel mainMenuPanel = createMainMenuPanel();
-        JPanel loginForm = new LoginForm(userService, this::onLoginSuccess);
+        JPanel loginForm = new LoginForm(userService, this::onLoginSuccess, cardLayout, cardPanel); // Pass cardLayout and cardPanel
         JPanel signupForm = new SignupForm(userService, cardLayout, cardPanel);
 
         // Add views to cardPanel
@@ -91,7 +91,6 @@ public class MainFrame extends JFrame {
     private void onLoginSuccess() {
         // Assuming the user is successfully logged in, get the logged-in user
         User loggedInUser = userService.getLoggedInUser(); // Adjust this method in your UserService to return the logged-in user
-        
         
         // Open the ProfileManagement frame with user details
         ProfileManagement profileManagement = new ProfileManagement(userService.getDatabaseManager(), loggedInUser);
