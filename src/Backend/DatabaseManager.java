@@ -1,98 +1,69 @@
 package Backend;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-
-import java.io.*;
+import java.util.Optional;
+import java.util.UUID;
 
 public class DatabaseManager {
 
-    // Save or update a user's data in a file named after their user ID
-    public void updateUser(User user) throws IOException {
-        String userData = serializeUser(user);
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(user.getUserId() + ".txt"))) {
-            writer.write(userData);
+    private static final String FILE_PATH = "users.json";
+    private List<User> users;
+
+    public DatabaseManager() {
+        loadUsers();
+    }
+
+    // Load users from JSON file
+    private void loadUsers() {
+        try (FileReader reader = new FileReader(FILE_PATH)) {
+            Type userListType = new TypeToken<ArrayList<User>>() {}.getType();
+            users = new Gson().fromJson(reader, userListType);
+            if (users == null) users = new ArrayList<>();
+        } catch (IOException e) {
+            users = new ArrayList<>();
         }
     }
 
-    // Fetch a user's data from the file
-    public User getUserById(String userId) throws IOException {
-        File file = new File(userId + ".txt");
-        if (!file.exists()) {
-            throw new FileNotFoundException("User database not found for user ID: " + userId);
+    // Save users to JSON file
+    private void saveUsers() {
+        try (FileWriter writer = new FileWriter(FILE_PATH)) {
+            new Gson().toJson(users, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            StringBuilder userData = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                userData.append(line).append("\n");
+    // Add a new user
+    public void addUser(User user) {
+        users.add(user);
+        saveUsers();
+    }
+
+    // Find a user by email
+    public Optional<User> findUserByEmail(String email) {
+        return users.stream().filter(user -> user.getEmail().equalsIgnoreCase(email)).findFirst();
+    }
+
+    // Update user information
+    public void updateUser(User updatedUser) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getEmail().equalsIgnoreCase(updatedUser.getEmail())) {
+                users.set(i, updatedUser);
+                saveUsers();
+                break;
             }
-            return deserializeUser(userData.toString());
         }
     }
 
-    // Serialize user to plain text (including posts)
-    private String serializeUser(User user) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(user.getUserId()).append("\n")
-          .append(user.getUsername()).append("\n")
-          .append(user.getEmail()).append("\n")
-          .append(user.getPassword()).append("\n")
-          .append(user.getBio()).append("\n")
-          .append(user.getProfilePhoto()).append("\n")
-          .append(user.getCoverPhoto()).append("\n")
-          .append(user.getStatus()).append("\n");
-    
-        // Serialize posts
-        sb.append("Posts:\n");
-        for (Post post : user.getPosts()) {
-            sb.append(post.getText()).append("||").append(post.getImagePath()).append("\n");
-        }
-
-         // Serialize friends
-    sb.append("Friends:\n");
-    for (Friend friend : user.getFriends()) {
-        sb.append(friend.getUsername()).append("||").append(friend.getProfilePhoto()).append("\n");
+    public List<User> getUsers() {
+        return users;
     }
-
-    return sb.toString();
-}
-private User deserializeUser(String userData) {
-    String[] lines = userData.split("\n");
-    User user = new User();
-    user.setUserId(lines[0]);
-    user.setUsername(lines[1]);
-    user.setEmail(lines[2]);
-    user.setPassword(lines[3]);
-    user.setBio(lines[4]);
-    user.setProfilePhoto(lines[5]);
-    user.setCoverPhoto(lines[6]);
-    user.setStatus(lines[7]);
-
-    // Deserialize posts
-    List<Post> posts = new ArrayList<>();
-    for (int i = 9; i < lines.length; i++) {
-        if (lines[i].startsWith("Posts:")) break;
-        String[] postData = lines[i].split("\\|\\|");
-        if (postData.length == 2) {
-            posts.add(new Post(postData[0], postData[1]));
-        }
-    }
-    user.setPosts(posts);
-
-    // Deserialize friends
-    List<Friend> friends = new ArrayList<>();
-    for (int i = lines.length - 1; i >= 0; i--) {
-        if (lines[i].startsWith("Friends:")) break;
-        String[] friendData = lines[i].split("\\|\\|");
-        if (friendData.length == 2) {
-            friends.add(new Friend(friendData[0], friendData[1]));
-        }
-    }
-    user.setFriends(friends);
-
-    return user;
-}
 }

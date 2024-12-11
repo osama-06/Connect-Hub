@@ -3,9 +3,8 @@ package Backend;
 import java.io.IOException;
 
 public class ProfileService {
-    
 
-      private DatabaseManager databaseManager;
+    private DatabaseManager databaseManager;
 
     public ProfileService(DatabaseManager databaseManager) {
         this.databaseManager = databaseManager;
@@ -49,8 +48,10 @@ public class ProfileService {
         // Here, for simplicity, we won't hash the password. In a real-world app, always hash passwords!
         user.setPassword(newPassword);
         databaseManager.updateUser(user);
-        System.out.println("Password updated successfully.");}
-        // Method to create a post
+        System.out.println("Password updated successfully.");
+    }
+
+    // Method to create a post
     public void createPost(User user, String text, String imagePath) throws IOException {
         Post newPost = new Post(text, imagePath);
         user.addPost(newPost);
@@ -62,6 +63,4 @@ public class ProfileService {
         user.removePost(post);
         databaseManager.updateUser(user);  // Save the updated user (without deleted post)
     }
-
-
 }
