@@ -60,11 +60,11 @@ public class NewsFeed extends JFrame {
         buttonPanel.setBackground(new Color(242, 242, 242));
 
         JButton uploadImageButton = new JButton("Upload Image");
-        styleButton(uploadImageButton, 130, 40);
+        styleButton(uploadImageButton, 200, 40);
         JButton postButton = new JButton("Post");
         styleButton(postButton, 130, 40);
         JButton backButton = new JButton("Back to Profile");
-        styleButton(backButton, 130, 40);
+        styleButton(backButton, 200, 40);
 
         uploadImageButton.addActionListener(e -> chooseImage());
         postButton.addActionListener(e -> createPost());
