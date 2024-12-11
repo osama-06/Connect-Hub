@@ -1,16 +1,17 @@
-package Frontend;
 
-import Backend.User;
-import Backend.UserService;
+package Backend;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.IOException;
-
 public class ProfileManagement extends JFrame {
-    private UserService userService;
+    private DatabaseManager databaseManager;
+    private ProfileService profileService;
     private User currentUser;
 
     private JTextArea bioField;
@@ -20,16 +21,16 @@ public class ProfileManagement extends JFrame {
     private JButton changeProfilePhotoButton;
     private JButton changeCoverPhotoButton;
     private JButton saveButton;
-    private JButton goToNewsFeedButton;
-    private JButton addFriendButton;
-    private JList<String> friendsList;
+    private JButton goToNewsFeedButton; // Button to go to News Feed
+    private JButton addFriendButton; // Button to add friend
+    private JList<String> friendsList; // List to display friends
 
-    public ProfileManagement(UserService userService) {
-        this.userService = userService;
-        this.currentUser = userService.getCurrentUser();  // Assuming getCurrentUser() method
+    public ProfileManagement(DatabaseManager databaseManager, User user) {
+        this.databaseManager = databaseManager;
+        this.profileService = new ProfileService(databaseManager);
+        this.currentUser = user;
 
-        // Set up frame
-        setTitle("Profile Management");
+        setTitle("Connect Hub Profile Management");
         setSize(1000, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -40,7 +41,7 @@ public class ProfileManagement extends JFrame {
             e.printStackTrace();
         }
 
-        // Header Panel (Cover Photo)
+        // Header (Cover Photo)
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(Color.LIGHT_GRAY);
         headerPanel.setPreferredSize(new Dimension(getWidth(), 250));
@@ -49,7 +50,7 @@ public class ProfileManagement extends JFrame {
         coverPhotoLabel.setHorizontalAlignment(JLabel.CENTER);
         coverPhotoLabel.setVerticalAlignment(JLabel.CENTER);
         coverPhotoLabel.setPreferredSize(new Dimension(800, 250));
-        displayImage(currentUser.getCoverPhotoPath(), coverPhotoLabel, 800, 250);
+        displayImage(currentUser.getCoverPhoto(), coverPhotoLabel, 800, 250);
         headerPanel.add(coverPhotoLabel, BorderLayout.CENTER);
 
         changeCoverPhotoButton = new JButton("Change Cover Photo");
@@ -68,7 +69,7 @@ public class ProfileManagement extends JFrame {
 
         profilePhotoLabel = new JLabel();
         profilePhotoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        displayImage(currentUser.getProfilePhotoPath(), profilePhotoLabel, 150, 150);
+        displayImage(currentUser.getProfilePhoto(), profilePhotoLabel, 150, 150);
         leftPanel.add(profilePhotoLabel);
 
         leftPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Spacing
@@ -117,37 +118,38 @@ public class ProfileManagement extends JFrame {
         rightPanel.add(passwordPanel, BorderLayout.CENTER);
         rightPanel.add(savePanel, BorderLayout.SOUTH);
 
-        // Go to News Feed Button
+        // Go to News Feed Button (New Feature)
         goToNewsFeedButton = new JButton("Go to News Feed");
         styleButton(goToNewsFeedButton, 180, 50);
         goToNewsFeedButton.addActionListener(e -> {
-            // Navigate to NewsFeed page
-            NewsFeed newsFeed = new NewsFeed(userService, currentUser);
+            NewsFeed newsFeed = new NewsFeed(databaseManager, currentUser);
             newsFeed.setVisible(true);
             this.dispose(); // Close the profile page
         });
 
-        // Add Go to News Feed button to body panel (bottom)
+        // Add Go to News Feed button to body panel (at the bottom)
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.WHITE);
         buttonPanel.add(goToNewsFeedButton);
         bodyPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Friends Panel
+        // **Friends Panel**
         JPanel friendsPanel = new JPanel();
         friendsPanel.setLayout(new BorderLayout());
         friendsPanel.setBackground(Color.WHITE);
         friendsPanel.setBorder(BorderFactory.createTitledBorder("Friends"));
 
         DefaultListModel<String> friendsModel = new DefaultListModel<>();
-        
+        for (Friend friend : currentUser.getFriends()) {
+            friendsModel.addElement(friend.getUsername());
+        }
 
         friendsList = new JList<>(friendsModel);
         JScrollPane friendsScrollPane = new JScrollPane(friendsList);
         friendsPanel.add(friendsScrollPane, BorderLayout.CENTER);
 
         addFriendButton = new JButton("Add Friend");
-       // addFriendButton.addActionListener(e -> addFriend());
+        addFriendButton.addActionListener(e -> addFriend());
         friendsPanel.add(addFriendButton, BorderLayout.SOUTH);
 
         // Add friends panel to body
@@ -157,7 +159,7 @@ public class ProfileManagement extends JFrame {
         bodyPanel.add(leftPanel, BorderLayout.WEST);
         bodyPanel.add(rightPanel, BorderLayout.CENTER);
 
-        // Add components to frame
+        // Add components to the frame
         add(headerPanel, BorderLayout.NORTH);
         add(bodyPanel, BorderLayout.CENTER);
 
@@ -167,17 +169,22 @@ public class ProfileManagement extends JFrame {
         saveButton.addActionListener(e -> saveChanges());
     }
 
-    /*private void addFriend() {
+    private void addFriend() {
         String friendUsername = JOptionPane.showInputDialog(this, "Enter friend's username:");
         if (friendUsername != null && !friendUsername.trim().isEmpty()) {
             // Add friend logic
-            currentUser.addFriend(friendUsername);
+            Friend newFriend = new Friend(friendUsername, "/path/to/profile/photo"); // Simplified for now
+            currentUser.addFriend(newFriend);
+           
+            // databaseManager.updateUser(currentUser);
+            // databaseManager.updateUser(currentUser); // Save the updated user
             JOptionPane.showMessageDialog(this, "Friend added successfully.");
-            // Refresh the friends list
+
+            // Refresh the friend list in the UI
             DefaultListModel<String> model = (DefaultListModel<String>) friendsList.getModel();
-            model.addElement(friendUsername);
+            model.addElement(newFriend.getUsername());
         }
-    }*/
+    }
 
     private void displayImage(String path, JLabel label, int width, int height) {
         try {
@@ -193,12 +200,11 @@ public class ProfileManagement extends JFrame {
 
     private void changeProfilePhoto() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png"));
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             String newPhotoPath = fileChooser.getSelectedFile().getAbsolutePath();
             try {
-                userService.changeProfilePhoto(currentUser, newPhotoPath);
-                currentUser.setProfilePhotoPath(newPhotoPath);
+                profileService.changeProfilePhoto(currentUser, newPhotoPath);
+                currentUser.setProfilePhoto(newPhotoPath);
                 displayImage(newPhotoPath, profilePhotoLabel, 150, 150);
                 JOptionPane.showMessageDialog(this, "Profile photo updated successfully.");
             } catch (IOException ex) {
@@ -209,12 +215,11 @@ public class ProfileManagement extends JFrame {
 
     private void changeCoverPhoto() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png"));
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             String newPhotoPath = fileChooser.getSelectedFile().getAbsolutePath();
             try {
-                userService.changeCoverPhoto(currentUser, newPhotoPath);
-                currentUser.setCoverPhotoPath(newPhotoPath);
+                profileService.changeCoverPhoto(currentUser, newPhotoPath);
+                currentUser.setCoverPhoto(newPhotoPath);
                 displayImage(newPhotoPath, coverPhotoLabel, 800, 250);
                 JOptionPane.showMessageDialog(this, "Cover photo updated successfully.");
             } catch (IOException ex) {
@@ -228,16 +233,32 @@ public class ProfileManagement extends JFrame {
         String newPassword = new String(passwordField.getPassword());
 
         try {
-            userService.updateBio(currentUser, newBio);
-            userService.updatePassword(currentUser, newPassword);
+            profileService.updateBio(currentUser, newBio);
+            profileService.updatePassword(currentUser, newPassword);
+            databaseManager.updateUser(currentUser);
             JOptionPane.showMessageDialog(this, "Profile updated successfully.");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error updating profile: " + e.getMessage());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error saving profile changes: " + ex.getMessage());
         }
     }
 
     private void styleButton(JButton button, int width, int height) {
         button.setPreferredSize(new Dimension(width, height));
-        button.setFont(new Font("Arial", Font.PLAIN, 14));
+        button.setBackground(new Color(66, 135, 245));
+        button.setForeground(Color.WHITE);
+        button.setFont(new Font("Arial", Font.BOLD, 14));
+        button.setFocusPainted(false);
+    }
+
+    public static void main(String[] args) {
+        try {
+            DatabaseManager databaseManager = new DatabaseManager();
+            User mockUser = databaseManager.getUserById("123");
+
+            ProfileManagement profilePage = new ProfileManagement(databaseManager, mockUser);
+            profilePage.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,38 +1,36 @@
 package Backend;
 
 public class Friend {
-    private String userId;
-    private String friendId;
-    private String status; // Online or offline
+    private String username;
+    private String profilePhoto; // Friend's profile photo path
 
-    public Friend(String userId, String friendId, String status) {
-        this.userId = userId;
-        this.friendId = friendId;
-        this.status = status;
+    public Friend(String username, String profilePhoto) {
+        this.username = username;
+        this.profilePhoto = profilePhoto;
     }
 
-    // Getters and setters
-    public String getUserId() {
-        return userId;
+    // Getters and Setters
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getFriendId() {
-        return friendId;
+    public String getProfilePhoto() {
+        return profilePhoto;
     }
 
-    public void setFriendId(String friendId) {
-        this.friendId = friendId;
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    @Override
+    public String toString() {
+        return "Friend{" +
+                "username='" + username + '\'' +
+                ", profilePhoto='" + profilePhoto + '\'' +
+                '}';
     }
 }

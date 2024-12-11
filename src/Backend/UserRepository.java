@@ -58,7 +58,7 @@ public class UserRepository {
     }
 
     public void updateUser(User user) {
-        users.removeIf(u -> u.getUserid().equals(user.getUserid()));
+        users.removeIf(u -> u.getUserId().equals(user.getUserId()));
         users.add(user);
         saveUsers();
     }
@@ -72,6 +72,5 @@ public class UserRepository {
         }
     }
 }
-    
 
 }
