@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\User\\Downloads\\Connect-Hub-Profile_Management2(1)\\Connect-Hub-Profile_Management2\\lib\\gson-2.10.jar"
+    ]
+}
