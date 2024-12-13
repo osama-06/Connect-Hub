@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\User\\Downloads\\Connect-Hub-Friend-Management1\\Connect-Hub-Friend-Management1\\lib\\gson-2.10.jar"
+    ]
+}
