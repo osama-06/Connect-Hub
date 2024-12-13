@@ -1,5 +1,6 @@
 package Frontend;
 
+import Backend.*;
 import Backend.DatabaseManager;
 import Backend.FriendManagement;
 import Backend.User;
@@ -23,8 +24,8 @@ public class FriendManagementGUI extends JFrame { // Extend JFrame here
     private FriendManagement friendManagement;
     
     
-    FriendManagementGUI(DatabaseManager databaseManager, User currentUser) {
-        friendManagement = new FriendManagement(currentUserId);  // Initialize FriendManagement with current user ID
+    /* FriendManagementGUI(DatabaseManager databaseManager, User currentUser) {
+        
 
         // Set JFrame properties directly
         setTitle("Friend Management");
@@ -96,7 +97,7 @@ public class FriendManagementGUI extends JFrame { // Extend JFrame here
         // Show the frame
         setVisible(true);
     }
-    
+    */
     public FriendManagementGUI(String currentUserId) {
         friendManagement = new FriendManagement(currentUserId);  // Initialize FriendManagement with current user ID
 

@@ -48,9 +48,23 @@ public ProfileManagement(DatabaseManager databaseManager, User user) {
 friendManagementButton = new JButton("Friend Management");
 styleButton(friendManagementButton, 180, 50);
 friendManagementButton.addActionListener(e -> {
-    FriendManagementGUI friendManagement = new FriendManagementGUI(databaseManager, currentUser);
+    String userId = JOptionPane.showInputDialog(null, "Enter your user ID:", "User ID", JOptionPane.QUESTION_MESSAGE);
+
+    // Check if the user entered an ID (it shouldn't be null or empty)
+    if (userId != null && !userId.trim().isEmpty()) {
+        // Create the FriendManagementGUI with the entered user ID
+        FriendManagementGUI friendManagement = new FriendManagementGUI(userId);
+        friendManagement.setVisible(true);
+        this.dispose();
+    } else {
+        // Show a message if the user didn't provide an ID
+        JOptionPane.showMessageDialog(null, "User ID cannot be empty. Exiting application.", "Error", JOptionPane.ERROR_MESSAGE);
+        System.exit(0); // Exit the program if no user ID is provided
+    }
+    
+    /*FriendManagementGUI friendManagement = new FriendManagementGUI(databaseManager, currentUser);
     friendManagement.setVisible(true);
-    this.dispose(); // Close the profile page
+    this.dispose(); // Close the profile page */
 });
 
     
