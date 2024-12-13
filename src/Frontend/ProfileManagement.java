@@ -31,6 +31,8 @@ public class ProfileManagement extends JFrame {
     private JTextField searchField; // Search field for username
     private JButton searchButton; // Button to initiate search
     private JButton logoutButton; // Button to log out
+    private JPanel notificationPanel;
+    private JLabel notificationLabel;
    
 
     private FriendshipService friendService; // FriendService for handling friend requests
@@ -169,8 +171,25 @@ public class ProfileManagement extends JFrame {
         friendsList = new JList<>(friendsModel);
         JScrollPane friendsScrollPane = new JScrollPane(friendsList);
         friendsPanel.add(friendsScrollPane, BorderLayout.CENTER);
+              
 
-        // **Search Friend Panel**
+
+
+         // Create notification panel
+        notificationPanel = new JPanel();
+        notificationPanel.setBackground(new Color(66, 135, 245));
+        notificationPanel.setPreferredSize(new Dimension(getWidth(), 40));
+         notificationPanel.setLayout(new BorderLayout());
+        notificationPanel.setVisible(false); // Hidden by default
+
+     notificationLabel = new JLabel("", SwingConstants.CENTER);
+    notificationLabel.setForeground(Color.WHITE);
+      notificationPanel.add(notificationLabel, BorderLayout.CENTER);
+
+    // Add to the frame (you can adjust where this is placed, e.g., at the top)
+    add(notificationPanel, BorderLayout.NORTH);
+
+         // **Search Friend Panel**
         JPanel searchPanel = new JPanel();
         searchPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         searchPanel.setBackground(Color.WHITE);
@@ -205,6 +224,7 @@ public class ProfileManagement extends JFrame {
                 JOptionPane.showMessageDialog(this, "No user selected to remove from friends.");
             }
         });
+        
 
         friendsPanel.add(addFriendButton, BorderLayout.SOUTH);
         friendsPanel.add(removeFriendButton, BorderLayout.SOUTH);
@@ -224,6 +244,8 @@ public class ProfileManagement extends JFrame {
         changeProfilePhotoButton.addActionListener(e -> changeProfilePhoto());
         changeCoverPhotoButton.addActionListener(e -> changeCoverPhoto());
         saveButton.addActionListener(e -> saveChanges());
+
+        
     }
 
     private void searchForUser() {
@@ -293,6 +315,20 @@ public class ProfileManagement extends JFrame {
             }
         }
     }
+
+    private void showNotification(String message) {
+        // Set the notification message
+        notificationLabel.setText(message);
+    
+        // Show the panel
+        notificationPanel.setVisible(true);
+    
+        // Timer to hide the notification after 3 seconds
+        Timer timer = new Timer(3000, e -> notificationPanel.setVisible(false));
+        timer.setRepeats(false);  // Make sure it only runs once
+        timer.start();
+    }
+    
 
     private void changeCoverPhoto() {
         JFileChooser fileChooser = new JFileChooser();

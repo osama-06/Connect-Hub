@@ -15,7 +15,7 @@ public class User {
     private List<Friend> friends;
     private List<Post> posts;
     private String dateOfBirth;
-
+    private List<Notification> notifications;
     // Lists to track friend requests
     private List<FriendRequest> sentRequests;
     private List<FriendRequest> receivedRequests;
@@ -32,6 +32,7 @@ public class User {
         this.receivedRequests = new ArrayList<>();
         this.friends = new ArrayList<>();
         this.posts = new ArrayList<>();
+        this.notifications = new ArrayList<>();
     }
 
     // Constructor for full initialization
@@ -50,6 +51,15 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.sentRequests = new ArrayList<>();
         this.receivedRequests = new ArrayList<>();
+        this.notifications = new ArrayList<>();
+    }
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void addNotification(Notification notification) {
+        notifications.add(notification);
     }
 
     // Getters and Setters for the new lists and fields

@@ -21,6 +21,10 @@ public class FriendshipService {
         userToRequest.getReceivedRequests().add(request);
         databaseManager.updateUser(loggedInUser);
         databaseManager.updateUser(userToRequest);
+        String message = loggedInUser.getUsername() + " sent you a friend request!";
+        NotificationService notificationService = new NotificationService(databaseManager);
+        notificationService.createNotification(userToRequest, message, loggedInUser.getUsername(), "friend_request");
+    
         return true; // Request sent successfully
     }
 
