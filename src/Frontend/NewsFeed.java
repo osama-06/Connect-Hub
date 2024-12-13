@@ -15,7 +15,7 @@ public class NewsFeed extends JFrame {
     private JLabel imagePreviewLabel;
     private String selectedImagePath = null;
     private JPanel feedPanel;
-
+  
     public NewsFeed(DatabaseManager databaseManager, User currentUser) {
         this.databaseManager = databaseManager;
         this.profileService = new ProfileService(databaseManager);

@@ -25,7 +25,7 @@ public class ProfileManagement extends JFrame {
     private JButton goToNewsFeedButton; // Button to go to News Feed
     private JButton addFriendButton; // Button to add friend
     private JList<String> friendsList; // List to display friends
-
+    
     private JButton logoutButton; // Button to log out
 
 public ProfileManagement(DatabaseManager databaseManager, User user) {

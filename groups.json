@@ -1,0 +1,41 @@
+{
+  "Group1" : {
+    "groupName" : "Group1",
+    "description" : "This is the description for Group1.",
+    "groupPhoto" : null,
+    "primaryAdmin" : "admin123",
+    "members" : [ "admin123", "user456" ],
+    "admins" : [ "admin123", "user456" ],
+    "posts" : [ {
+      "postId" : null,
+      "content" : "wwwwwwwwwwwwww",
+      "authorId" : "admin123",
+      "timestamp" : null
+    }, {
+      "postId" : null,
+      "content" : "This is a post by user456.",
+      "authorId" : "user456",
+      "timestamp" : null
+    }, {
+      "postId" : "882a619f-6df1-4920-8309-fbe76b586b0c",
+      "content" : "ooooohooooooooooooooooo",
+      "authorId" : "admin123",
+      "timestamp" : "2024-12-13T13:26:44.439043"
+    }, {
+      "postId" : "2df456f3-df05-4bef-ae6a-c517e5358e23",
+      "content" : "ahaafdska212",
+      "authorId" : "abdo",
+      "timestamp" : "2024-12-13T14:42:27.207475200"
+    }, {
+      "postId" : "02c65030-b5e4-431c-a6fc-c843a81a955a",
+      "content" : "a7eeeeeeehgdsag",
+      "authorId" : "admin123",
+      "timestamp" : "2024-12-13T15:05:10.312142200"
+    }, {
+      "postId" : "5eb10098-8c13-4896-9a64-513ce65d7102",
+      "content" : "fasfasasfas",
+      "authorId" : "admin123",
+      "timestamp" : "2024-12-13T15:07:26.989910600"
+    } ]
+  }
+}

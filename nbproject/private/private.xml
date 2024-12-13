@@ -3,14 +3,27 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Connect-Hub/src/Backend/DatabaseManager.java</file>
-            <file>file:/E:/Connect-Hub/src/Backend/ProfileService.java</file>
-            <file>file:/E:/Connect-Hub/src/Backend/Friend.java</file>
-            <file>file:/E:/Connect-Hub/src/Backend/NewsFeed.java</file>
-            <file>file:/E:/Connect-Hub/src/Backend/ProfileManagement.java</file>
-            <file>file:/E:/Connect-Hub/src/Backend/User.java</file>
-            <file>file:/E:/Connect-Hub/src/Backend/Connect_Hub_lab9.java</file>
-            <file>file:/E:/Connect-Hub/src/Backend/Post.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Frontend/ProfileManagement.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Frontend/SuccessPanel.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Backend/Group.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Frontend/MemberWindow.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Frontend/MainFrame.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Backend/HashUtils.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Backend/ProfileService.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Backend/Friend.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Frontend/LoginForm.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Frontend/JoinedWindow.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Backend/DatabaseManager.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Backend/Gpost.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Frontend/NormalUserPanel.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Backend/UserAccManagement.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Frontend/FriendManagementGUI.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Frontend/NewsFeed.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Backend/Post.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Frontend/PrimaryAdminWindow.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Backend/GroupManager.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Backend/FriendManagement.java</file>
+            <file>file:/C:/Users/Abdelrahman/Documents/GitHub/Connect-Hub/src/Frontend/AdminWindow.java</file>
         </group>
     </open-files>
 </project-private>
