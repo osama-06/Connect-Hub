@@ -25,7 +25,7 @@ public class ProfileManagement extends JFrame {
     private JButton goToNewsFeedButton; // Button to go to News Feed
     private JButton addFriendButton; // Button to add friend
     private JList<String> friendsList; // List to display friends
-
+    private JButton friendManagementButton; // Button to manage friends
     private JButton logoutButton; // Button to log out
 
 public ProfileManagement(DatabaseManager databaseManager, User user) {
@@ -43,7 +43,17 @@ public ProfileManagement(DatabaseManager databaseManager, User user) {
     } catch (Exception e) {
         e.printStackTrace();
     }
+    
+    // Friend Management Button
+friendManagementButton = new JButton("Friend Management");
+styleButton(friendManagementButton, 180, 50);
+friendManagementButton.addActionListener(e -> {
+    FriendManagementGUI friendManagement = new FriendManagementGUI(databaseManager, currentUser);
+    friendManagement.setVisible(true);
+    this.dispose(); // Close the profile page
+});
 
+    
     // Header (Cover Photo)
     JPanel headerPanel = new JPanel(new BorderLayout());
     headerPanel.setBackground(Color.LIGHT_GRAY);
@@ -144,9 +154,12 @@ public ProfileManagement(DatabaseManager databaseManager, User user) {
     JPanel buttonPanel = new JPanel();
     buttonPanel.setBackground(Color.WHITE);
     buttonPanel.add(goToNewsFeedButton);
+    buttonPanel.add(friendManagementButton);  // Add friend management button
     buttonPanel.add(logoutButton);  // Add logout button beside "Go to News Feed"
     bodyPanel.add(buttonPanel, BorderLayout.SOUTH);
-
+    
+    
+    
     // **Friends Panel**
     JPanel friendsPanel = new JPanel();
     friendsPanel.setLayout(new BorderLayout());
