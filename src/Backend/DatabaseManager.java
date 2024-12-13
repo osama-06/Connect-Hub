@@ -10,7 +10,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public class DatabaseManager {
 
@@ -61,6 +60,16 @@ public class DatabaseManager {
                 break;
             }
         }
+    }
+
+    // Get a user by username
+    public User getUserByUsername(String username) {
+        for (User user : users) {
+            if (user.getUsername().equalsIgnoreCase(username)) {
+                return user;
+            }
+        }
+        return null;  // Return null if user is not found
     }
 
     public List<User> getUsers() {

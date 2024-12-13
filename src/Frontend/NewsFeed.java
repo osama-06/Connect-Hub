@@ -128,16 +128,41 @@ public class NewsFeed extends JFrame {
         postPanel.setBackground(new Color(255, 255, 255));
         postPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         postPanel.setMaximumSize(new Dimension(getWidth(), 400));
-
+    
+        // Post Header with Profile Picture and Username
+        JPanel postHeaderPanel = new JPanel(new BorderLayout(10, 10));
+        postHeaderPanel.setBackground(new Color(255, 255, 255));
+        
+        // Profile Picture (Small Icon)
+        JLabel profilePictureLabel = new JLabel();
+        String profilePicturePath = currentUser.getProfilePhoto();
+        if (profilePicturePath != null && !profilePicturePath.isEmpty()) {
+            ImageIcon profileIcon = new ImageIcon(new ImageIcon(profilePicturePath)
+                    .getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH));
+            profilePictureLabel.setIcon(profileIcon);
+        }
+        profilePictureLabel.setPreferredSize(new Dimension(50, 50));
+    
+        // Username Label
+        JLabel usernameLabel = new JLabel(currentUser.getUsername());
+        usernameLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        usernameLabel.setForeground(new Color(50, 50, 50));
+    
+        // Add profile picture and username to header panel
+        postHeaderPanel.add(profilePictureLabel, BorderLayout.WEST);
+        postHeaderPanel.add(usernameLabel, BorderLayout.CENTER);
+        
+        postPanel.add(postHeaderPanel, BorderLayout.NORTH);
+    
         // Post Text
         if (post.getText() != null && !post.getText().isEmpty()) {
             JLabel textLabel = new JLabel("<html>" + post.getText().replaceAll("\n", "<br>") + "</html>");
             textLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
             textLabel.setForeground(new Color(50, 50, 50));
             textLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            postPanel.add(textLabel, BorderLayout.NORTH);
+            postPanel.add(textLabel, BorderLayout.CENTER);
         }
-
+    
         // Post Image (if exists)
         if (post.getImagePath() != null) {
             JLabel imageLabel = new JLabel();
@@ -145,13 +170,14 @@ public class NewsFeed extends JFrame {
             ImageIcon imageIcon = new ImageIcon(new ImageIcon(post.getImagePath())
                     .getImage().getScaledInstance(600, 300, Image.SCALE_SMOOTH));
             imageLabel.setIcon(imageIcon);
-            postPanel.add(imageLabel, BorderLayout.CENTER);
+            postPanel.add(imageLabel, BorderLayout.SOUTH);
         }
-
+    
         feedPanel.add(postPanel);
         feedPanel.revalidate();
         feedPanel.repaint();
     }
+    
 
     private void loadPosts() {
         List<Post> posts = currentUser.getPosts();
