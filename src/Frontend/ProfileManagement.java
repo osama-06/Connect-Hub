@@ -33,6 +33,7 @@ public class ProfileManagement extends JFrame {
     private JButton logoutButton; // Button to log out
     private JPanel notificationPanel;
     private JLabel notificationLabel;
+    private JButton goToGroupManagementButton; // Button to go to Group Management
    
 
     private FriendshipService friendService; // FriendService for handling friend requests
@@ -244,6 +245,23 @@ public class ProfileManagement extends JFrame {
         changeProfilePhotoButton.addActionListener(e -> changeProfilePhoto());
         changeCoverPhotoButton.addActionListener(e -> changeCoverPhoto());
         saveButton.addActionListener(e -> saveChanges());
+
+
+        //o to Group Management Button*
+        goToGroupManagementButton = new JButton("Go to Group Management");
+        styleButton(goToGroupManagementButton, 200, 50);
+        goToGroupManagementButton.addActionListener(e -> {
+            try {
+                GroupManagement groupManagement = new GroupManagement(new GroupService(databaseManager), currentUser);
+                groupManagement.setVisible(true);
+                this.dispose(); // Close the profile management window
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error opening Group Management: " + ex.getMessage());
+            }
+        });
+
+        // Add the button to your panel (e.g., bodyPanel)
+        buttonPanel.add(goToGroupManagementButton);
 
         
     }

@@ -5,5 +5,9 @@
         "c:\\Users\\User\\Downloads\\Connect-Hub-Friend-Management1\\Connect-Hub-Friend-Management1\\lib\\jackson-annotations-2.18.2.jar",
         "c:\\Users\\User\\Downloads\\Connect-Hub-Friend-Management1\\Connect-Hub-Friend-Management1\\lib\\jackson-core-2.18.2.jar",
         "c:\\Users\\User\\Downloads\\Connect-Hub-Friend-Management1\\Connect-Hub-Friend-Management1\\lib\\jackson-databind-2.18.2.jar"
+    ],
+    "java.project.sourcePaths": [
+        "src",
+        "nbproject"
     ]
 }

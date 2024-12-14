@@ -65,6 +65,6 @@ public class FriendshipService {
 
     // Search for a user by username
     public User searchUserByUsername(String username) {
-        return databaseManager.getUserByUsername(username);
-    }
+       return databaseManager.getUserByUsername(username);
+  }
 }
