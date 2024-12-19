@@ -25,9 +25,11 @@ public class ProfileManagement extends JFrame {
     private JButton goToNewsFeedButton; // Button to go to News Feed
     private JButton addFriendButton; // Button to add friend
     private JList<String> friendsList; // List to display friends
-
+    
+    
     private JButton logoutButton; // Button to log out
-
+    
+        private JButton chatButton; // Button chats
 public ProfileManagement(DatabaseManager databaseManager, User user) {
     this.databaseManager = databaseManager;
     this.profileService = new ProfileService(databaseManager);
@@ -140,11 +142,24 @@ public ProfileManagement(DatabaseManager databaseManager, User user) {
         this.dispose(); // Close the profile page
     });
 
+    
+        // **Logout Button** to log out and go back to the main frame
+    chatButton = new JButton("chats");
+    styleButton(chatButton, 180, 50);
+    chatButton.addActionListener(e -> {
+        ChattingWindow chats = new ChattingWindow(currentUser.getUsername());  // Assuming you have a LoginFrame for login screen
+        chats.setVisible(true);
+        this.dispose(); // Close the profile page
+    });
+
+    
+    
     // Add Go to News Feed and Logout button to body panel (at the bottom)
     JPanel buttonPanel = new JPanel();
     buttonPanel.setBackground(Color.WHITE);
     buttonPanel.add(goToNewsFeedButton);
     buttonPanel.add(logoutButton);  // Add logout button beside "Go to News Feed"
+    buttonPanel.add(chatButton);  // Add logout button beside "Go to News Feed"
     bodyPanel.add(buttonPanel, BorderLayout.SOUTH);
 
     // **Friends Panel**
