@@ -3,12 +3,6 @@ package Frontend;
 import Backend.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.IOException;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.File;
-import java.awt.*;
-import java.awt.event.*;
 import java.io.IOException;
 public class ProfileManagement extends JFrame {
     private DatabaseManager databaseManager;
@@ -25,6 +19,8 @@ public class ProfileManagement extends JFrame {
     private JButton goToNewsFeedButton; // Button to go to News Feed
     private JButton addFriendButton; // Button to add friend
     private JList<String> friendsList; // List to display friends
+    private JButton notificationButton; // Notification Button
+private int notificationCount = 0;
     
     
     private JButton logoutButton; // Button to log out
@@ -153,6 +149,48 @@ public ProfileManagement(DatabaseManager databaseManager, User user) {
     });
 
     
+  // Notification Button
+  notificationButton = new JButton("Notifications (0)");
+  styleButton(notificationButton, 180, 50);
+  notificationButton.setBackground(new Color(255, 69, 58)); // Red for new notifications
+  notificationButton.addActionListener(e -> {
+      showNotifications();
+  });
+
+  JPanel headerPanel1 = new JPanel(new BorderLayout());
+  headerPanel1.setBackground(Color.LIGHT_GRAY);
+  headerPanel1.setPreferredSize(new Dimension(getWidth(), 250));
+
+  coverPhotoLabel = new JLabel();
+  coverPhotoLabel.setHorizontalAlignment(JLabel.CENTER);
+  coverPhotoLabel.setVerticalAlignment(JLabel.CENTER);
+  coverPhotoLabel.setPreferredSize(new Dimension(800, 250));
+  displayImage(currentUser.getCoverPhoto(), coverPhotoLabel, 800, 250);
+  headerPanel1.add(coverPhotoLabel, BorderLayout.CENTER);
+
+  changeCoverPhotoButton = new JButton("Change Cover Photo");
+  styleButton(changeCoverPhotoButton, 150, 40);
+  headerPanel1.add(changeCoverPhotoButton, BorderLayout.SOUTH);
+  JPanel notificationPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+  notificationPanel.setBackground(Color.LIGHT_GRAY);
+  notificationPanel.add(notificationButton);
+  headerPanel.add(notificationPanel, BorderLayout.NORTH);
+
+  // Other Components (Body Panel, etc.)...
+
+  add(headerPanel, BorderLayout.NORTH);
+  add(bodyPanel, BorderLayout.CENTER);
+
+  // Button Actions
+  changeProfilePhotoButton.addActionListener(e -> changeProfilePhoto());
+  changeCoverPhotoButton.addActionListener(e -> changeCoverPhoto());
+  saveButton.addActionListener(e -> saveChanges());
+
+
+
+
+
+    
     
     // Add Go to News Feed and Logout button to body panel (at the bottom)
     JPanel buttonPanel = new JPanel();
@@ -241,6 +279,14 @@ public ProfileManagement(DatabaseManager databaseManager, User user) {
             }
         }
     }
+    
+
+    private void simulateNotification() {
+        notificationCount++;
+        notificationButton.setText("Notifications (" + notificationCount + ")");
+        notificationButton.setBackground(new Color(255, 69, 58)); // Red for new notifications
+    }
+    
 
     private void changeCoverPhoto() {
         JFileChooser fileChooser = new JFileChooser();
@@ -255,6 +301,12 @@ public ProfileManagement(DatabaseManager databaseManager, User user) {
                 JOptionPane.showMessageDialog(this, "Error updating cover photo: " + ex.getMessage());
             }
         }
+    }
+    private void showNotifications() {
+        JOptionPane.showMessageDialog(this, "You have " + notificationCount + " new notifications.");
+        notificationCount = 0; // Reset notification count
+        notificationButton.setText("Notifications (0)");
+        notificationButton.setBackground(new Color(66, 135, 245)); // Blue for no new notifications
     }
 
     private void saveChanges() {

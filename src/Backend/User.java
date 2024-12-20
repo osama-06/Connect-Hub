@@ -53,6 +53,8 @@ public class User {
         this.receivedRequests = new ArrayList<>();
         this.notifications = new ArrayList<>();
     }
+    public User ()
+    {};
 
     public List<Notification> getNotifications() {
         return notifications;
