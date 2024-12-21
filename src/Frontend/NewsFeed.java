@@ -15,7 +15,7 @@ public class NewsFeed extends JFrame {
     private JLabel imagePreviewLabel;
     private String selectedImagePath = null;
     private JPanel feedPanel;
-  
+
     public NewsFeed(DatabaseManager databaseManager, User currentUser) {
         this.databaseManager = databaseManager;
         this.profileService = new ProfileService(databaseManager);
@@ -128,11 +128,11 @@ public class NewsFeed extends JFrame {
         postPanel.setBackground(new Color(255, 255, 255));
         postPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         postPanel.setMaximumSize(new Dimension(getWidth(), 400));
-    
+
         // Post Header with Profile Picture and Username
         JPanel postHeaderPanel = new JPanel(new BorderLayout(10, 10));
         postHeaderPanel.setBackground(new Color(255, 255, 255));
-        
+
         // Profile Picture (Small Icon)
         JLabel profilePictureLabel = new JLabel();
         String profilePicturePath = currentUser.getProfilePhoto();
@@ -142,18 +142,18 @@ public class NewsFeed extends JFrame {
             profilePictureLabel.setIcon(profileIcon);
         }
         profilePictureLabel.setPreferredSize(new Dimension(50, 50));
-    
+
         // Username Label
         JLabel usernameLabel = new JLabel(currentUser.getUsername());
         usernameLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
         usernameLabel.setForeground(new Color(50, 50, 50));
-    
+
         // Add profile picture and username to header panel
         postHeaderPanel.add(profilePictureLabel, BorderLayout.WEST);
         postHeaderPanel.add(usernameLabel, BorderLayout.CENTER);
-        
+
         postPanel.add(postHeaderPanel, BorderLayout.NORTH);
-    
+
         // Post Text
         if (post.getText() != null && !post.getText().isEmpty()) {
             JLabel textLabel = new JLabel("<html>" + post.getText().replaceAll("\n", "<br>") + "</html>");
@@ -162,7 +162,7 @@ public class NewsFeed extends JFrame {
             textLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             postPanel.add(textLabel, BorderLayout.CENTER);
         }
-    
+
         // Post Image (if exists)
         if (post.getImagePath() != null) {
             JLabel imageLabel = new JLabel();
@@ -172,12 +172,33 @@ public class NewsFeed extends JFrame {
             imageLabel.setIcon(imageIcon);
             postPanel.add(imageLabel, BorderLayout.SOUTH);
         }
-    
+
+        // Buttons Panel (Like, Comment, Show Comments)
+        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        buttonsPanel.setBackground(new Color(255, 255, 255));
+
+        JButton likeButton = new JButton("Like");
+        styleButton(likeButton, 100, 30);
+        likeButton.addActionListener(e -> handleLike(post));
+
+        JButton commentButton = new JButton("Comment");
+        styleButton(commentButton, 100, 30);
+        commentButton.addActionListener(e -> handleComment(post));
+
+        JButton showCommentsButton = new JButton("Show Comments");
+        styleButton(showCommentsButton, 150, 30);
+      //  showCommentsButton.addAction        showCommentsButton.addActionListener(e -> showComments(post));
+
+        buttonsPanel.add(likeButton);
+        buttonsPanel.add(commentButton);
+        buttonsPanel.add(showCommentsButton);
+
+        postPanel.add(buttonsPanel, BorderLayout.SOUTH);
+
         feedPanel.add(postPanel);
         feedPanel.revalidate();
         feedPanel.repaint();
     }
-    
 
     private void loadPosts() {
         List<Post> posts = currentUser.getPosts();
@@ -202,16 +223,45 @@ public class NewsFeed extends JFrame {
         button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
         // Add hover effect
-        button.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent evt) {
                 button.setBackground(new Color(50, 115, 220));
             }
 
-            public void mouseExited(java.awt.event.MouseEvent evt) {
+            @Override
+            public void mouseExited(MouseEvent evt) {
                 button.setBackground(new Color(66, 135, 245));
             }
         });
     }
 
-   
+    private void handleLike(Post post) {
+        // Increment like count and save to database
+       // post.incrementLikes();
+      // databaseManager.savePost(post);
+        JOptionPane.showMessageDialog(this, "You liked the post!");
+    }
+
+    private void handleComment(Post post) {
+        // Display a dialog box to add a comment
+        String comment = JOptionPane.showInputDialog(this, "Enter your comment:");
+        if (comment != null && !comment.trim().isEmpty()) {
+         //   post.addComment(currentUser.getUsername(), comment);
+          //  databaseManager.savePost(post);
+            JOptionPane.showMessageDialog(this, "Comment added!");
+        }
+    }
+
+    private void showComments(Post post) {
+        // Display all comments in a dialog box
+      //  List<String> comments = post.getComments();
+        StringBuilder commentsText = new StringBuilder("<html><b>Comments:</b><br>");
+      //  for (String comment : comments) {
+     //       commentsText.append(comment).append("<br>");
+      //  }
+        commentsText.append("</html>");
+        JOptionPane.showMessageDialog(this, new JLabel(commentsText.toString()), "Comments", JOptionPane.INFORMATION_MESSAGE);
+    }
 }
+
