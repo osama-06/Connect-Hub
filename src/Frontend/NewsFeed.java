@@ -187,7 +187,7 @@ public class NewsFeed extends JFrame {
 
         JButton showCommentsButton = new JButton("Show Comments");
         styleButton(showCommentsButton, 150, 30);
-      //  showCommentsButton.addAction        showCommentsButton.addActionListener(e -> showComments(post));
+        showCommentsButton.addActionListener(e -> showComments(post));
 
         buttonsPanel.add(likeButton);
         buttonsPanel.add(commentButton);
